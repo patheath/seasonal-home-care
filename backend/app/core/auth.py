@@ -11,7 +11,7 @@ bearer_scheme = HTTPBearer()
 
 @lru_cache(maxsize=1)
 def _get_jwks() -> dict:
-    """Fetch and cache Supabase JWKS (RS256 public keys)."""
+    """Fetch and cache Supabase JWKS (ES256 public keys)."""
     url = f"{settings.supabase_url}/auth/v1/.well-known/jwks.json"
     response = httpx.get(url, timeout=10)
     response.raise_for_status()
@@ -28,7 +28,7 @@ def get_current_user_id(
         payload = jwt.decode(
             token,
             jwks,
-            algorithms=["RS256"],
+            algorithms=["ES256"],
             audience="authenticated",
         )
         user_id: str = payload.get("sub", "")
