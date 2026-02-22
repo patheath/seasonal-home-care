@@ -46,6 +46,16 @@ __pycache__/
 venv/
 .venv/
 *.egg-info/
+.mypy_cache/
+.pytest_cache/
+
+# SQLite
+*.db
+*.db-shm
+*.db-wal
+
+# Alembic (keep versions/, ignore generated env)
+backend/alembic/versions/*.pyc
 
 # Misc
 *.tmp
