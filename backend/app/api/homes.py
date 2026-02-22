@@ -4,13 +4,13 @@ from sqlalchemy.orm import Session
 from app.core.auth import get_current_user_id
 from app.core.database import get_db
 from app.schemas.home import HomeProfileCreate, HomeProfileResponse
-from app.schemas.task import TaskPlanResponse, Season, TaskStatusUpdate, TaskResponse
+from app.schemas.task import TaskPlanResponse, Season, TaskResponse
 from app.services import home_service, task_service
 
 router = APIRouter(prefix="/homes", tags=["homes"])
 
 
-@router.get("/me", response_model=HomeProfileResponse)
+@router.get("/me", response_model=HomeProfileResponse, response_model_by_alias=True)
 async def get_my_home(
     user_id: str = Depends(get_current_user_id),
     db: Session = Depends(get_db),
@@ -21,7 +21,7 @@ async def get_my_home(
     return home
 
 
-@router.post("", response_model=HomeProfileResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=HomeProfileResponse, response_model_by_alias=True, status_code=status.HTTP_201_CREATED)
 async def create_home(
     data: HomeProfileCreate,
     user_id: str = Depends(get_current_user_id),
@@ -33,7 +33,7 @@ async def create_home(
     return home_service.create_home(db, user_id, data)
 
 
-@router.put("/{home_id}", response_model=HomeProfileResponse)
+@router.put("/{home_id}", response_model=HomeProfileResponse, response_model_by_alias=True)
 async def update_home(
     home_id: str,
     data: HomeProfileCreate,
@@ -46,7 +46,7 @@ async def update_home(
     return home_service.update_home(db, home_id, data)
 
 
-@router.get("/{home_id}/tasks", response_model=TaskPlanResponse)
+@router.get("/{home_id}/tasks", response_model=TaskPlanResponse, response_model_by_alias=True)
 async def get_task_plan(
     home_id: str,
     season: Season | None = None,
@@ -59,7 +59,7 @@ async def get_task_plan(
     return task_service.get_task_plan(db, home_id)
 
 
-@router.post("/{home_id}/tasks/generate", response_model=TaskPlanResponse)
+@router.post("/{home_id}/tasks/generate", response_model=TaskPlanResponse, response_model_by_alias=True)
 async def generate_task_plan(
     home_id: str,
     user_id: str = Depends(get_current_user_id),

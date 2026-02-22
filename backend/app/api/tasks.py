@@ -9,7 +9,7 @@ from app.services import task_service
 router = APIRouter(prefix="/tasks", tags=["tasks"])
 
 
-@router.put("/{task_id}", response_model=TaskResponse)
+@router.put("/{task_id}", response_model=TaskResponse, response_model_by_alias=True)
 async def update_task_status(
     task_id: str,
     update: TaskStatusUpdate,
