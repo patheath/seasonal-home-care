@@ -1,12 +1,23 @@
 {
   "permissions": {
     "allow": [
+      "Bash(git:*)",
       "Bash(gh:*)",
-      "Bash(git add:*)",
+      "Bash(npm:*)",
+      "Bash(curl:*)",
+      "Bash(uvicorn:*)",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(source:*)",
+      "Bash(pip:*)",
+      "Bash(tail:*)",
+      "Bash(mkdir:*)",
+      "Bash(cp:*)",
+      "Bash(rm:*)",
+      "Bash(brew:*)",
+      "Bash(sleep:*)",
       "Bash(cd:*)",
-      "Bash(git commit:*)",
-      "Bash(cd /Users/patrickheath/workspace/seasonal-home-care/frontend && npx tsc --noEmit 2>&1)",
-      "Bash(tail:*)"
+      "Bash(git add:*)"
     ]
   }
 }

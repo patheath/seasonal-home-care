@@ -107,7 +107,7 @@ npm run lint
 ## Claude API Integration
 - The `backend/app/services/ai_service.py` module owns all Claude API calls
 - Use the `anthropic` Python SDK
-- Model: `claude-sonnet-4-6` (default), allow override via env var `CLAUDE_MODEL`
+- Model: `claude-haiku-4-5-20251001` for development (cheap/fast), `claude-sonnet-4-6` for production — controlled via `CLAUDE_MODEL` env var
 - Always set a reasonable `max_tokens` limit per call
 - Log token usage for cost tracking
 - Keep system prompts in a dedicated `prompts/` directory as `.txt` files — do not inline long prompts in code
