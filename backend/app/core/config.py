@@ -13,7 +13,6 @@ class Settings(BaseSettings):
     # Supabase
     supabase_url: str
     supabase_anon_key: str
-    supabase_jwt_secret: str
 
     # Database
     database_url: str = "sqlite:///./seasonal_home_care.db"
