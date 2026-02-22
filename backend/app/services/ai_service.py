@@ -44,7 +44,11 @@ def generate_task_plan(home: HomeProfileResponse) -> TaskPlanResponse:
         f"output: {message.usage.output_tokens}"
     )
 
-    raw = message.content[0].text
+    raw = message.content[0].text.strip()
+    # Strip markdown code fences if Claude wrapped the JSON
+    if raw.startswith("```"):
+        raw = raw.split("\n", 1)[-1]
+        raw = raw.rsplit("```", 1)[0].strip()
     data = json.loads(raw)
 
     now = datetime.now(timezone.utc).isoformat()
