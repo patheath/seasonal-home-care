@@ -103,6 +103,7 @@ npm run lint
 - Never commit `.env` files — use `.env.example` with placeholder values
 - All secrets go in environment variables
 - Write tests for all service-layer functions
+- Avoid compound commands entirely; use separate Bash calls for each step
 
 ## Claude API Integration
 - The `backend/app/services/ai_service.py` module owns all Claude API calls
