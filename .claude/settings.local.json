@@ -3,7 +3,10 @@
     "allow": [
       "Bash(gh:*)",
       "Bash(git add:*)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(git commit:*)",
+      "Bash(cd /Users/patrickheath/workspace/seasonal-home-care/frontend && npx tsc --noEmit 2>&1)",
+      "Bash(tail:*)"
     ]
   }
 }
