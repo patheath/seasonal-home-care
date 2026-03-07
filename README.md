@@ -61,6 +61,13 @@ seasonal-home-care/
 └── docs/        # Architecture and product docs
 ```
 
+## Troubleshooting
+
+### App stuck on loading screen / Supabase token errors in console
+Supabase free-tier projects **auto-pause after 1 week of inactivity**. If you see `ERR_NAME_NOT_RESOLVED` errors pointing to `*.supabase.co` in the browser console, the project is likely paused.
+
+**Fix:** Log into [supabase.com](https://supabase.com), open your project, and click **Resume project**. It takes ~1–2 minutes to wake up, then refresh the app.
+
 ## Contributing
 
 This project is in early development. See [docs/architecture.md](docs/architecture.md) for technical decisions and [docs/product-requirements.md](docs/product-requirements.md) for the product roadmap.

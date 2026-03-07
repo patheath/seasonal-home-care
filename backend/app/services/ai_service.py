@@ -7,7 +7,7 @@ import anthropic
 
 from app.core.config import settings
 from app.schemas.home import HomeProfileResponse
-from app.schemas.task import TaskResponse, TaskPlanResponse
+from app.schemas.task import TaskResponse, TaskPlanResponse, Season
 
 _client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
 
@@ -18,10 +18,11 @@ def _load_prompt(name: str) -> str:
     return (_PROMPTS_DIR / f"{name}.txt").read_text()
 
 
-def generate_task_plan(home: HomeProfileResponse) -> TaskPlanResponse:
+def generate_task_plan(home: HomeProfileResponse, season: Season) -> TaskPlanResponse:
     system_prompt = _load_prompt("task_generation")
 
     home_description = (
+        f"Season: {season}\n"
         f"Home type: {home.home_type}\n"
         f"Year built: {home.year_built}\n"
         f"Region: {home.region}\n"
@@ -29,19 +30,21 @@ def generate_task_plan(home: HomeProfileResponse) -> TaskPlanResponse:
         f"Special features: {', '.join(home.features) if home.features else 'none'}"
     )
 
+    import time
+    t0 = time.perf_counter()
     message = _client.messages.create(
         model=settings.claude_model,
-        max_tokens=4096,
+        max_tokens=8192,
         system=system_prompt,
         messages=[
-            {"role": "user", "content": f"Generate a seasonal task plan for this home:\n\n{home_description}"}
+            {"role": "user", "content": f"Generate a {season} maintenance task plan for this home:\n\n{home_description}"}
         ],
     )
+    elapsed = (time.perf_counter() - t0) * 1000
 
-    # Log token usage
     print(
-        f"[ai_service] tokens used — input: {message.usage.input_tokens}, "
-        f"output: {message.usage.output_tokens}"
+        f"[ai_service] {elapsed:.0f}ms — input: {message.usage.input_tokens} tokens, "
+        f"output: {message.usage.output_tokens} tokens"
     )
 
     raw = message.content[0].text.strip()

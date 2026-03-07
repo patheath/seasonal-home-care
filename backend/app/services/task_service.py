@@ -14,12 +14,16 @@ def get_task_plan(db: Session, home_id: str) -> TaskPlanResponse:
     return TaskPlanResponse(home_id=home_id, generated_at=generated_at, tasks=task_responses)
 
 
-def generate_and_save_task_plan(db: Session, home: HomeProfileResponse) -> TaskPlanResponse:
-    # Delete existing AI-generated tasks before regenerating
-    db.query(Task).filter(Task.home_id == home.id, Task.is_custom == False).delete()  # noqa: E712
+def generate_and_save_task_plan(db: Session, home: HomeProfileResponse, season: Season) -> TaskPlanResponse:
+    # Delete existing AI-generated tasks for this season before regenerating
+    db.query(Task).filter(
+        Task.home_id == home.id,
+        Task.season == season,
+        Task.is_custom == False,  # noqa: E712
+    ).delete()
     db.commit()
 
-    plan = ai_service.generate_task_plan(home)
+    plan = ai_service.generate_task_plan(home, season)
 
     for task in plan.tasks:
         db.add(Task(
@@ -31,7 +35,6 @@ def generate_and_save_task_plan(db: Session, home: HomeProfileResponse) -> TaskP
             status=task.status,
             title=task.title,
             description=task.description,
-            estimated_effort=task.estimated_effort,
             is_custom=False,
             created_at=task.created_at,
         ))

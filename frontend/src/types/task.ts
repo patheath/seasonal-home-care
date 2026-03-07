@@ -1,13 +1,6 @@
 export type Season = 'spring' | 'summer' | 'fall' | 'winter'
 
-export type TaskCategory =
-  | 'exterior'
-  | 'interior'
-  | 'hvac'
-  | 'plumbing'
-  | 'safety'
-  | 'landscaping'
-  | 'other'
+export type TaskCategory = 'home' | 'landscape' | 'inspect'
 
 export type TaskPriority = 'high' | 'medium' | 'low'
 

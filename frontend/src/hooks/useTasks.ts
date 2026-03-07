@@ -13,7 +13,7 @@ export function useTaskPlan(homeId: string) {
 export function useGenerateTaskPlan(homeId: string) {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: () => tasksApi.generateTaskPlan(homeId),
+    mutationFn: (season: Season) => tasksApi.generateTaskPlan(homeId, season),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['tasks', homeId] }),
   })
 }

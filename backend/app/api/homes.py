@@ -62,10 +62,11 @@ async def get_task_plan(
 @router.post("/{home_id}/tasks/generate", response_model=TaskPlanResponse, response_model_by_alias=True)
 async def generate_task_plan(
     home_id: str,
+    season: Season,
     user_id: str = Depends(get_current_user_id),
     db: Session = Depends(get_db),
 ):
     home = home_service.get_home_by_user(db, user_id)
     if not home or home.id != home_id:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Home not found")
-    return task_service.generate_and_save_task_plan(db, home)
+    return task_service.generate_and_save_task_plan(db, home, season)

@@ -3,7 +3,7 @@ from pydantic.alias_generators import to_camel
 from typing import Literal
 
 Season = Literal["spring", "summer", "fall", "winter"]
-TaskCategory = Literal["exterior", "interior", "hvac", "plumbing", "safety", "landscaping", "other"]
+TaskCategory = Literal["home", "landscape", "inspect"]
 TaskPriority = Literal["high", "medium", "low"]
 TaskStatus = Literal["pending", "complete", "snoozed"]
 
